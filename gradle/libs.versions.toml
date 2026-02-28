@@ -1,8 +1,12 @@
 [versions]
 agp = "8.12.3"
-kotlin = "2.3.10"
+appfunctions = "1.0.0-alpha08"
+appfunctionsService = "1.0.0-alpha08"
+appfunctionsCompiler = "1.0.0-alpha08"
+kotlin = "2.2.21"
 coreKtx = "1.17.0"
 junit = "4.13.2"
+kotlinxCoroutinesGuava = "1.10.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 lifecycleRuntimeKtx = "2.10.0"
@@ -11,7 +15,7 @@ composeBom = "2026.02.01"
 materialIconsExtended = "1.7.8"
 runtimeLivedata = "1.10.4"
 compiler = "1.5.15"
-ksp="2.3.5"
+ksp="2.2.21-2.0.4"
 hilt="2.57.1"
 hiltAndroid = "2.59.1"
 hiltNavigationCompose = "1.3.0"
@@ -19,8 +23,13 @@ kotlinxCoroutinesAndroid = "1.10.2"
 roomKtxVersion = "2.8.4"
 roomRuntimeVersion = "2.8.4"
 converterGson = "3.0.0"
+appcompat = "1.7.1"
+material = "1.13.0"
 
 [libraries]
+androidx-appfunctions-compiler = { module = "androidx.appfunctions:appfunctions-compiler", version.ref = "appfunctionsCompiler" }
+androidx-appfunctions-service = { module = "androidx.appfunctions:appfunctions-service", version.ref = "appfunctionsService" }
+androidx-appfunctions = { module = "androidx.appfunctions:appfunctions", version.ref = "appfunctions" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -48,6 +57,9 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtxVersion" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntimeVersion" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+kotlinx-coroutines-guava = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-guava", version.ref = "kotlinxCoroutinesGuava" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -55,3 +67,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 hilt-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 ksp-plugin = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+android-library = { id = "com.android.library", version.ref = "agp" }

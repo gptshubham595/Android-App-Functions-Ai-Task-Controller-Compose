@@ -12,6 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,22 +29,22 @@ class TodoViewModel @Inject constructor(
     private val getTodoListUseCase: GetTodoListUseCase,
     private val addTodoItemUseCase: AddTodoItemUseCase,
     private val deleteTodoItemUseCase: DeleteTodoItemUseCase,
-    private val updateTodoItemUseCase: UpdateTodoItemUseCase
+    private val updateTodoItemUseCase: UpdateTodoItemUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(TodoUiState())
     val uiState: StateFlow<TodoUiState> = _uiState.asStateFlow()
 
     init {
-        fetchTodoList()
+        observeTodoList()
     }
 
-    fun fetchTodoList() {
+    private fun observeTodoList() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             when (val result = getTodoListUseCase()) {
                 is Utils.Either.Success -> {
-                    result.data.collect { list ->
+                    result.data.collectLatest { list ->
                         _uiState.update { it.copy(todoList = list, isLoading = false) }
                     }
                 }
@@ -62,13 +63,12 @@ class TodoViewModel @Inject constructor(
         val newItem = TodoItem(
             id = System.currentTimeMillis(),
             task = task.trim(),
-            status = Utils.TodoStatus.PENDING.name
+            status = Utils.TodoStatus.PENDING.name,
         )
         viewModelScope.launch {
             when (val result = addTodoItemUseCase(newItem)) {
                 is Utils.Either.Success -> {
                     result.data.collect {
-                        fetchTodoList()
                         _uiState.update { state -> state.copy(successMessage = "Task added!") }
                     }
                 }
@@ -85,7 +85,7 @@ class TodoViewModel @Inject constructor(
             when (val result = deleteTodoItemUseCase(todoId)) {
                 is Utils.Either.Success -> {
                     result.data.collect {
-                        fetchTodoList()
+                        _uiState.update { it.copy(successMessage = "Task deleted.") }
                     }
                 }
 
@@ -107,7 +107,12 @@ class TodoViewModel @Inject constructor(
             when (val result = updateTodoItemUseCase(updatedItem)) {
                 is Utils.Either.Success -> {
                     result.data.collect {
-                        fetchTodoList()
+                        val message = if (updatedStatus == Utils.TodoStatus.COMPLETED.name) {
+                            "Task completed."
+                        } else {
+                            "Task moved back to pending."
+                        }
+                        _uiState.update { it.copy(successMessage = message) }
                     }
                 }
 

@@ -8,12 +8,13 @@ import androidx.room.Update
 import com.shubham.todojetpackcompose.common.TODO_TABLE_NAME
 import com.shubham.todojetpackcompose.data.models.TodoItemEntity
 import com.shubham.todojetpackcompose.data.repo.TodoDataSource
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TodoRoomDao : TodoDataSource {
 
-    @Query("SELECT * FROM $TODO_TABLE_NAME")
-    override suspend fun fetchAllTodoItems(): List<TodoItemEntity>
+    @Query("SELECT * FROM $TODO_TABLE_NAME ORDER BY id DESC")
+    override fun fetchAllTodoItems(): Flow<List<TodoItemEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     override suspend fun addTodoItem(todoItemEntity: TodoItemEntity): Long
@@ -25,5 +26,5 @@ interface TodoRoomDao : TodoDataSource {
     override suspend fun updateTodoItem(todoItemEntity: TodoItemEntity): Int
 
     @Query("SELECT * FROM $TODO_TABLE_NAME WHERE id = :todoId")
-    override suspend fun fetchIdTodoItem(todoId: Int): TodoItemEntity?
+    override suspend fun fetchIdTodoItem(todoId: Long): TodoItemEntity?
 }

@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "TodoJetpackCompose"
 include(":app")
- 
+include(":agent")

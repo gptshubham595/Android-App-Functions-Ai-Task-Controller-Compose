@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app-metadata>
+    <!-- For the agent/LLM: what this app can do -->
+    <description>
+        ComposeTodo is a local todo list app. It can list all tasks, only pending tasks,
+        or only completed tasks; add a new task; mark a task as completed; reopen a completed
+        task; delete a task; and return todo statistics.
+    </description>
+
+    <!-- For UI surfaces: short user-facing summary -->
+    <display-description>
+        View and manage your todo tasks with add, list, complete, reopen, delete, and stats.
+    </display-description>
+</app-metadata>

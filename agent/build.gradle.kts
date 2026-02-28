@@ -7,15 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.shubham.todojetpackcompose"
+    namespace = "com.shubham.todoAgent"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.shubham.todojetpackcompose"
         minSdk = 36
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -29,25 +25,21 @@ android {
             )
         }
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
 
     buildFeatures {
         compose = true
     }
 
     ksp {
-        arg("room.schemaLocation", "$projectDir/schemas")
         arg("appfunctions:aggregateAppFunctions", "true")
-        arg("appfunctions:generateMetadataFromSchema", "false")
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
     }
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
@@ -88,7 +80,5 @@ dependencies {
     implementation(libs.androidx.appfunctions)
     implementation(libs.androidx.appfunctions.service)
     ksp(libs.androidx.appfunctions.compiler)
-
     implementation(libs.kotlinx.coroutines.guava)
-
 }
