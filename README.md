@@ -26,6 +26,7 @@ The assistant receives structured responses (not raw UI), enabling voice-first, 
 ---
 
 ## Architecture
+```
 ┌─────────────────┐     App Functions Schema      ┌──────────────────┐
 │  AI Assistant   │ ◄────────────────────────────► │   Todo App       │
 │  (Gemini / AOSP)│   READ_TASKS, CREATE_TASK,    │  • Room DB       │
@@ -34,6 +35,7 @@ The assistant receives structured responses (not raw UI), enabling voice-first, 
 ▲                                         └──────────────────┘
 │                                                    │
 └──────────────── Structured response ◄──────────────┘
+```
 
 - **AppFunctionManager** registers capabilities at runtime
 - **Intent-based contracts** define input/output schemas per action
